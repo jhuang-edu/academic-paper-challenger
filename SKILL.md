@@ -1,59 +1,62 @@
 ---
-name: thesis-audit
+name: thesis-audit-challenger
 description: >
-  Universal three-stage audit skill for academic and degree theses (Markdown, Word .docx, and CSV/TSV/XLSX research logs).
-  Covers Stage 1 five-dimension rapid defect blitz (leaks, cross-file drift, timeline paradoxes, arithmetic/unit errors, broken prose),
-  Stage 2 statistical & cross-table data forensics, and Stage 3 AI-writing/fabrication authenticity diagnosis and remediation loops.
-  Triggers: thesis audit, thesis check, paper audit, data forensics, 论文核查, 论文审计, 盲审自查, 终稿检查, 数据校验, 真实性质询.
+  Universal three-stage academic thesis & paper audit and data/authenticity challenger skill
+  (integrating two-layer primary-source verification with automated data forensics across Markdown, Word .docx, LaTeX, PDF, and CSV/TSV/XLSX).
+  Covers Stage 1 (First Pass 50-100 issue blitz across D1-D5, rubric band checks & format-aware intake with MD5/multi-rule word count baseline),
+  Stage 2 (Second Pass primary-source verification [Confirmed/Discrepancy/Unverifiable/Serious Error] & automated statistical/cross-table data challenge),
+  and Stage 3 (Graded authenticity & AI-writing interrogation weighing forensic signals vs. counter-evidence, correction ledger, and optional rotating follow-up rounds).
+  Triggers: thesis audit, thesis challenger, paper audit, data challenge, data forensics, 论文核查, 论文挑战, 找50个问题, 挑战数据, 真实性质询, 盲审自查.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.2.0"
   author: "jhuang-edu"
 ---
 
-# Thesis Audit：通用学术与学位论文三阶极限审计
+# Thesis Audit Challenger：通用学术论文核查、数据挑战与真实性质询
 
-本 Skill 适用于**任意学科与载体**（`.md` / `.txt` / `.docx` 与 `.csv` / `.tsv` / `.xlsx`）的学位论文或期刊论文送审前压力测试，旨在通过“半小时找茬 + 全链路统计法医 + AI 与真实性破局”系统暴露隐患并建立三端同步闭环。
+本 Skill 融合了**“两层一手来源考官核查法（First Pass + Primary-Source Second Pass）”**与**“自动化跨表/统计数据法医挑战 + AI 代写与编造真实性破局”**，适用于**任意学科与载体**（`.md` / `.txt` / `.docx` / `.tex` / `.pdf` 与 `.csv` / `.tsv` / `.xlsx`）的学位论文或期刊论文送审前极限压力测试。
 
-## 硬性边界与反误杀声明
+## 收稿与动态定基线（Format-Aware Intake & Re-baselining）
 
-1. **只审计与提出修正方案，严禁编造或篡改真值**：绝不捏造实验记录、访谈原话、文献 DOI、法条号或人为篡改原始实测数据以迎合统计检验；若真实机制导致高相关或特定分布，须引导补充测量学方法论说明与稳健性指标。
-2. **证据锚定铁律**：每一条缺陷指控必须附带精确可复核锚点（`文件路径:行号`、`DOCX 段落/表格序号` 或 `CSV/XLSX 列名与统计量`）；无锚点指控禁止写入正式报告。
-3. **单一事实源与跨载体同步**：任何修改必须按“原始数据/脚本 ↔ 分章/附录文稿 ↔ 合稿与排版终稿（DOCX/PDF）”链路同步核验，防止“修一处、裂三处”。
-4. **反误杀边界（Clues, Not Blacklists）**：
-   - 模式匹配、句长 CV、连接词密度与统计法医信号均属**审查线索**，不单独构成“AI 代写”或“数据造假”的定罪证据；
-   - 保留学术文本必需的限定词（“可能”“初步”“在……条件下”）、否定范围、客观归因及合法平行结构，禁止为降 AI 率强行口语化或机械拆碎长句；
-   - 本 Skill 旨在提升论文一致性与答辩抗压能力，**不保证**通过任何特定查重系统、AIGC 检测器或学校盲审。
+1. **收稿四问与底稿对齐**：获取论文文件与学校/期刊要求文档（或评分标准 Rubric）；确认是**草稿（Draft）还是终稿（Final）**；确认**问题目标数**（默认 `50` 或 `100` 条，绝不拿琐碎弱问题凑数，不够则实话实说）；建议作者一并提供早期草稿与导师指导记录。
+2. **按格式分流提取**：Word 用原生 OpenXML / `python-docx`；PDF 用 `pdftotext` 提文本并用 `pdfinfo` 记录作者/生成器/创建时间作为取证信号；LaTeX 直接做源码静态审计；数据台账读取 `.csv/.tsv/.xlsx`。
+3. **多口径字数矩阵与 MD5 哈希基线**：
+   - 按**每种可能口径**各算一遍字数并并排记录（仅正文、正文+摘要、含标点全字符、中文字+英文词元），终结字数达标争议；
+   - 记录文件 `MD5` 哈希与修改时间戳；复查中若收到新版本，自动重新定基线并与旧提取底本 `diff`，仅复核改动段落及其下游依赖项。
 
-## 核心原则（Non-Negotiable Principles）
+## 硬性边界与三大铁律
 
-1. **魔鬼代言人优先**：假设所有局部自检“全绿”均可能掩盖跨文件、表格解析或统计口径漏洞，以苛刻盲审评委视角主动质询。
-2. **口径与统计零妥协**：分位数插值口径（`INC` vs `EXC`）、跨期折算基准、分母守恒与检验边界必须显式写明并可独立复算。
-3. **跨学科与无数据豁免兼容**：覆盖工科、理科、社科、经管、医学论文；纯理论/纯质性无量化台账研究在 Stage 2 记录 `N/A` 豁免说明后直通 Stage 3。
-4. **全链路闭环签核**：所有缺陷均须录入修复矩阵并经终稿复扫验证通过后，方可从 `Fixed` 转为 `Verified`。
+1. **只审计与提出修正方案，严禁编造或篡改真值**：绝不捏造实验记录、访谈原话、文献 DOI、法条号或人为篡改原始实测值以迎合统计检验；若真实机制导致高相关或特定分布，须引导补充测量学方法论说明与稳健性指标。
+2. **证据锚定与一手来源铁律（Primary-Source Rule）**：
+   - 首轮每条缺陷必须附带精确锚点（`file:line`、`docx:part:pX/tblY` 或 `CSV列名`）与可执行改法；**严重级别拿不准时一律往高定一级并写明风险理由**（`S0/Blocker` 阻断提交、`S1/Major` 影响评分或答辩、`S2-S3/Minor` 影响观感）；
+   - 第二轮核验引用的每个一手来源（官方公布法条、出版商/DOI 索引、法院/监管通报、标准原文）**必须亲自打开核实，搜索结果摘要（Snippet）或二手转述页绝不算一手来源**；未核实的数字绝不写成“已证实”。
+3. **真实性三对分离与分级结论铁律（Graded Authenticity）**：
+   - 任何时候严格区分三对判断：**查不到 $\neq$ 编造**；**高度疑似 AI 辅助 $\neq$ 纯 AI 生成**；**引用马虎 $\neq$ 引用造假**；
+   - 必须将**取证信号**（异常元数据、凌晨创建时间、AI 手术线头、零摩擦真空案例、未卜先知字典、脚注与文献脱节、互不相关引用访问日期雷同）与**反证**（作者确实做出的精准专业区分，如法条例外条款或相近理论辨析）放在天平两端一起称重，给出**分级结论**并列出定稿前需补充的证明材料（查重报告、早期草稿、指导记录）。
 
-## 三阶审计路由表
+## 三阶核查与挑战路由表
 
-| 阶段 / 场景 | 首选工作流 | 配套清单 / 模板 | 参考方法论与脚本 |
+| 阶段 / 核心任务 | 首选工作流 | 配套清单 / 模板 | 参考方法论与自动化脚本 |
 |---|---|---|---|
-| **Stage 1：半小时地毯式找茬**（D1–D5 全文缺陷定位） | [`workflows/stage-1-rapid-blitz.md`](workflows/stage-1-rapid-blitz.md) | [`checklists/rapid-audit-50pt-template.md`](checklists/rapid-audit-50pt-template.md) | [`references/five-dimension-taxonomy.md`](references/five-dimension-taxonomy.md) + `doc_leak_scanner.py` / `cross_table_reconciler.py` / `prose_rhythm_audit.py` |
-| **Stage 2：全链路数据校验与统计挑战**（口径/复算/法医检测） | [`workflows/stage-2-data-forensics.md`](workflows/stage-2-data-forensics.md) | [`checklists/data-reconciliation-checklist.md`](checklists/data-reconciliation-checklist.md) | [`references/statistical-forensics-guide.md`](references/statistical-forensics-guide.md) + `data_forensics.py` / `cross_table_reconciler.py` |
-| **Stage 3：AI 与编造真实性质询及破局**（破绽定位与闭环修复） | [`workflows/stage-3-authenticity-recovery.md`](workflows/stage-3-authenticity-recovery.md) | [`templates/remediation-matrix.md`](templates/remediation-matrix.md) | [`references/ai-and-fabrication-tells.md`](references/ai-and-fabrication-tells.md) + `prose_rhythm_audit.py` |
-| **输出核查报告与交付门禁**（G1–G8 终极放行检查） | — | [`checklists/defense-and-blind-review-gate.md`](checklists/defense-and-blind-review-gate.md) + [`templates/audit-report-template.md`](templates/audit-report-template.md) | [`references/case-study-desensitized.md`](references/case-study-desensitized.md)（完全脱敏实战复盘） |
+| **Stage 1（Pass 1）：收稿定基线 + 半小时五维找茬**（D1–D5 + Rubric 逐档 + 学科自适应找 50/100 问） | [`workflows/stage-1-rapid-blitz.md`](workflows/stage-1-rapid-blitz.md) | [`checklists/rapid-audit-50pt-template.md`](checklists/rapid-audit-50pt-template.md) | [`references/five-dimension-taxonomy.md`](references/five-dimension-taxonomy.md) + `doc_leak_scanner.py` / `cross_table_reconciler.py` / `prose_rhythm_audit.py` |
+| **Stage 2（Pass 2）：一手来源全量复核 + 数据统计法医挑战**（四大核验结论 + 跨表平账 + 合成信号挑战） | [`workflows/stage-2-data-forensics.md`](workflows/stage-2-data-forensics.md) | [`checklists/data-reconciliation-checklist.md`](checklists/data-reconciliation-checklist.md) | [`references/statistical-forensics-guide.md`](references/statistical-forensics-guide.md) + `data_forensics.py` / `cross_table_reconciler.py` |
+| **Stage 3：AI 与编造真实性质询、破局、修正账与可选短轮查**（信号/反证称重 + 三端同步 + 空轮即停） | [`workflows/stage-3-authenticity-recovery.md`](workflows/stage-3-authenticity-recovery.md) | [`templates/remediation-matrix.md`](templates/remediation-matrix.md)（含**修正账 Correction Ledger**） | [`references/ai-and-fabrication-tells.md`](references/ai-and-fabrication-tells.md) + `prose_rhythm_audit.py` |
+| **输出核查报告与交付门禁**（G1–G8 终极放行检查） | — | [`checklists/defense-and-blind-review-gate.md`](checklists/defense-and-blind-review-gate.md) + [`templates/audit-report-template.md`](templates/audit-report-template.md) | [`references/case-study-desensitized.md`](references/case-study-desensitized.md)（脱敏实战复盘） |
 
-## 通用脚本速查（纯 Python 3.8+ 标准库）
+## 通用自动化脚本速查（100% 纯 Python 3.8+ 标准库，零外部依赖）
 
 ```bash
-# 1. 文档泄漏与合稿/分章指纹同步扫描 (.md/.txt/.docx)
+# 1. 文档泄漏、内部指令/未渲染符号扫描与合稿/分章指纹同步比对 (.md/.txt/.docx)
 python scripts/doc_leak_scanner.py --inputs <doc_or_dir...> [--compare <merged> <part1> <part2>...] [--rules <rules.json>] [--mode prose|cs] --format json
 
 # 2. 跨表纵向/横向算术、合并单元格、图表编号连续性与清单对账
 python scripts/cross_table_reconciler.py --docs <doc1> [<doc2>...] [--rules <reconcile.json>] [--tol 0.05] --format json
 
-# 3. 台账统计复算与法医检验 (.csv/.tsv/.xlsx)
+# 3. 台账统计复算与数据法医挑战 (.csv/.tsv/.xlsx：双口径IQR、共线性 r>0.90、游程检验、末位数字、Benford、Kappa/McNemar)
 python scripts/data_forensics.py --input <data.csv|tsv|xlsx> [--sheet <name>] [--id-col <col>] [--group-col <col>] [--num-cols <c1,c2>] [--ref-col <col> --pred-col <col>] --alpha 0.05 --format json
 
-# 4. 句长节奏 CV、机械断句残句与 AI 连接词/套话审计
+# 4. 句长节奏 CV、机械断句残句（如“然而。”）与 AI 连接词/套话审计
 python scripts/prose_rhythm_audit.py --inputs <doc_or_dir...> --lang auto --min-cv 0.35 --max-sent 160 [--exclude-headings 参考文献,致谢] [--buzzwords <json>] --format json
 
 # 5. Skill 包自身结构、YAML、链接、纯标准库与测试合规自检
@@ -62,23 +65,12 @@ python scripts/validate_skill.py --run-tests --format json
 
 ## 终稿放行闸门（G1–G8）
 
-详见 [`checklists/defense-and-blind-review-gate.md`](checklists/defense-and-blind-review-gate.md)。以下任一闸门为 `FAIL` 时，**禁止签发交付放行**：
-
-| 闸门 | 核心要求 | 校验手段 |
-|---|---|---|
-| **G1 零符号与指令泄漏** | 无未渲染 `**`/`` ` ``/`>`/`<br>`/围栏、无旧行号/seed/裸变量、无未清理批注或修订 | [`scripts/doc_leak_scanner.py`](scripts/doc_leak_scanner.py) |
-| **G2 跨载体内容一致** | 合稿、分章、附录与 `.docx` 样本属性、流程描述与结论无矛盾 | `doc_leak_scanner.py --compare` + 人工对照 |
-| **G3 图表编号与索引同步** | 图/表编号连续、正文无孤儿引用、图清单/表清单页码与正文题注一致 | [`scripts/cross_table_reconciler.py`](scripts/cross_table_reconciler.py) |
-| **G4 时序与状态机自洽** | 无复盘规则倒填事前实验、初版与修订版区分清晰、状态枚举全稿统一 | [`workflows/stage-1-rapid-blitz.md`](workflows/stage-1-rapid-blitz.md) (D3) |
-| **G5 算术、量纲与口径全平** | 表格分项加总=小计/合计、跨期与年化量纲明确、样本量分母守恒 | `cross_table_reconciler.py` + [`scripts/data_forensics.py`](scripts/data_forensics.py) |
-| **G6 统计法医红旗已处置** | 共线性/游程/末位数字/Benford/离群红旗已修正或补充方法论与稳健性解释 | `data_forensics.py` |
-| **G7 断句残句与 AI 套话清零** | 无强行拆句残句，句长 CV 与衔接自然，无空泛三连排比与真空案例 | [`scripts/prose_rhythm_audit.py`](scripts/prose_rhythm_audit.py) |
-| **G8 法条、文献与主体锚定** | 法规标准条款号与生效时态准确、文献迁移逻辑成立、脱敏化名全稿统一 | 人工核验 + `doc_leak_scanner.py` |
-
-## 反模式（Anti-Patterns）
-
-- 仅因单篇自检脚本输出全绿就放弃人工对照最终 Word/PDF 成品。
-- 直接在最终排版 Word 手改文字或数字，却不同步回源分章文稿、合稿与渲染脚本。
-- 仅凭单个高频连接词或单句长度就武断判定“AI 代写”，或为压字数/拉高 CV 把正常长句强行劈成病句。
-- 为消除高相关性或游程告警而擅自篡改原始实验实测数值。
-- 不加锚点（`file:line` / `tbl:rXcY`）或跳过修复后回归验证就将问题标为已解决。
+以下任一闸门为 `FAIL` 时，**禁止签发终稿交付放行**：
+- **G1 零符号与指令泄漏**：无未渲染 `**`/`` ` ``/`>`/`<br>`/围栏、无旧行号/随机种子/裸变量名、无未清理批注或修订；
+- **G2 跨载体单一事实源一致**：合稿、分章、附录与 `.docx` 样本属性、流程描述与结论零冲突；
+- **G3 图表编号与索引同步**：图/表编号连续、正文无孤儿引用、图清单/表清单页码与正文题注一致；
+- **G4 时序与状态机自洽**：无复盘规则倒填事前实验、初版（`v1.0`）与修订版（`v1.2`）区分清晰、状态枚举全稿统一；
+- **G5 算术、量纲与一手来源全平**：表格分项加总=小计/合计、跨期与年化量纲明确、Pass 2 一手来源核验无 `Serious Error`；
+- **G6 统计法医红旗已处置**：共线性/游程/末位数字/Benford/离群红旗已修正或补充测量学方法论与稳健性解释；
+- **G7 断句残句与 AI 套话清零**：无机械拆句残句，句长 CV 与衔接自然，无空泛三连排比与零摩擦真空案例；
+- **G8 法条、文献与主体锚定**：法规条款号与生效期（完稿日之前）准确、文献迁移逻辑成立、脱敏化名全稿统一、争议项已记入《修正账》。

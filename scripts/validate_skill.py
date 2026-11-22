@@ -170,9 +170,9 @@ def _check_v3_yaml_frontmatter(root: Path) -> Dict[str, Any]:
     if not m_name or not re.match(r"^[a-z0-9][a-z0-9-]{0,63}$", m_name.group(1)):
         return {"id": "V3", "name": "YAML Frontmatter 规范", "status": "FAIL", "detail": "name 字段不符合规范"}
     skill_name = m_name.group(1)
-    if skill_name != "thesis-audit":
-        return {"id": "V3", "name": "YAML Frontmatter 规范", "status": "FAIL", "detail": "name 必须为 thesis-audit，实际: {0}".format(skill_name)}
-    if root.name == "thesis-audit" and skill_name != root.name:
+    if skill_name not in ("thesis-audit-challenger", "thesis-audit"):
+        return {"id": "V3", "name": "YAML Frontmatter 规范", "status": "FAIL", "detail": "name 必须为 thesis-audit-challenger，实际: {0}".format(skill_name)}
+    if root.name in ("thesis-audit-challenger", "thesis-audit") and skill_name != root.name:
         return {"id": "V3", "name": "YAML Frontmatter 规范", "status": "FAIL", "detail": "name 与目录名不一致"}
 
     m_lic = re.search(r"^license:\s*['\"]?([^'\"\r\n]+)['\"]?\s*$", fm, flags=re.MULTILINE)
