@@ -17,7 +17,7 @@
 | 连续编号 | 所属阶段/维度 | 严重度 | 根因分类 | 单一事实源修改位置 | 联动同步范围（分章/合稿/附录/数据/脚本/DOCX） | 修改前后摘要 | 关联脚本 / 人工回归检查项 | 闭环状态 |
 |---|---|---|---|---|---|---|---|---|
 | `#01` | Stage 1 / D1 | `S0/Blocker` | 内部指令残留 | `ch1.md:155` | 分章 + 合稿 + 目录 + `.docx` | 删除标题括号内约束指令 | `doc_leak_scanner.py` + 目录核对 | Verified |
-| `#02` | Stage 1 / D2 | `S0/Blocker` | 渲染脚本缺陷 | `render_v3_docx.py:480` | 全部表格 + 正文 + `.docx` | 补充单元格 `**`/`` ` ``/`<br>` 内联解析 | 重新渲染 `.docx` 后跑 `doc_leak_scanner.py` | Verified |
+| `#02` | Stage 1 / D2 | `S0/Blocker` | 渲染脚本缺陷 | `render_docx.py:480` | 全部表格 + 正文 + `.docx` | 补充单元格 `**`/`` ` ``/`<br>` 内联解析 | 重新渲染 `.docx` 后跑 `doc_leak_scanner.py` | Verified |
 | `#03` | Stage 2 / D4 | `S1/Major` | 跨期量纲混用 | `ch5.md:850` | 正文 + 表 5-4 + 摘要 | 统一折算为“年化口径”并注明原 18 个月周期 | `cross_table_reconciler.py` | Verified |
 | `#04` | Stage 2 / G6 | `S1/Major` | 共线性与抽样框 | `ch4.md:685` | CSV + 方法论节 + 附录 C | 说明分层抽样框配额与共同阅读基线 | `data_forensics.py` | Verified |
 | `#05` | Stage 3 / D5 | `S1/Major` | 机械拆句残句 | `ch1-ch6.md` | 分章 + 合稿 + `.docx` | 修复“然而。”等残句，保持 CV >= 0.35 | `prose_rhythm_audit.py` | Verified |
