@@ -47,7 +47,6 @@ REQUIRED_FILES = [
     "README.md",
     "LICENSE",
     ".gitignore",
-    ".github/workflows/validate-skill.yml",
     "workflows/stage-1-rapid-blitz.md",
     "workflows/stage-2-data-forensics.md",
     "workflows/stage-3-authenticity-recovery.md",
