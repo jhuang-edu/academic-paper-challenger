@@ -1,0 +1,21 @@
+{
+  "inherit_defaults": true,
+  "disable_rule_ids": ["BARE_SNAKE_CASE"],
+  "whitelist_terms": ["f1_score", "batch_temp_offset"],
+  "negation_window": {
+    "left_chars": 18,
+    "right_chars": 10,
+    "extra_cues": ["剔除", "不纳入"]
+  },
+  "custom_rules": [
+    {
+      "id": "CUSTOM_TERM",
+      "pattern": "\\blegacy_internal_flag\\b",
+      "severity": "FAIL",
+      "applies_to": ["all"],
+      "exemptible": true,
+      "ignore_case": true,
+      "description": "检测到自定义禁用内部标记"
+    }
+  ]
+}

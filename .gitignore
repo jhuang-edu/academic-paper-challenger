@@ -1,0 +1,30 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS & editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local audit runtime outputs & temp locks
+audit_outputs/
+*.local
+.env
+.env.*
+!.env.example
+~$*
+
+# Keep synthetic test fixtures tracked
+!tests/fixtures/
+!tests/fixtures/**

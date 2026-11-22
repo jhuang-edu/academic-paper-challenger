@@ -1,0 +1,56 @@
+{
+  "variables": {
+    "v_north": {
+      "doc_match": "",
+      "table_match": "各冷链分仓配送车次统计",
+      "row_match": "北区冷链分仓",
+      "col_match": "配送车次",
+      "extract_regex": null,
+      "agg": "first"
+    },
+    "v_south": {
+      "doc_match": "",
+      "table_match": "各冷链分仓配送车次统计",
+      "row_match": "南区冷链分仓",
+      "col_match": "配送车次",
+      "extract_regex": null,
+      "agg": "first"
+    },
+    "v_subtotal": {
+      "doc_match": "",
+      "table_match": "各冷链分仓配送车次统计",
+      "row_match": "小计",
+      "col_match": "配送车次",
+      "extract_regex": null,
+      "agg": "first"
+    },
+    "v_total": {
+      "doc_match": "",
+      "table_match": "各冷链分仓配送车次统计",
+      "row_match": "^合计$",
+      "col_match": "配送车次",
+      "extract_regex": null,
+      "agg": "first"
+    }
+  },
+  "assertions": [
+    {
+      "id": "RULE_SUBTOTAL_MATCH",
+      "description": "南北直属仓配送车次之和应等于直属仓小计",
+      "lhs": "v_north + v_south",
+      "op": "==",
+      "rhs": "v_subtotal",
+      "tol": 0.05,
+      "severity": "FAIL"
+    },
+    {
+      "id": "RULE_WRONG_TOTAL_CHECK",
+      "description": "故意构造的失败跨表断言（直属仓小计不等于全网总计）",
+      "lhs": "v_subtotal",
+      "op": "==",
+      "rhs": "v_total",
+      "tol": 0.05,
+      "severity": "FAIL"
+    }
+  ]
+}
