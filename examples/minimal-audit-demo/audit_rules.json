@@ -1,0 +1,39 @@
+{
+  "variables": {
+    "cost_sort": {
+      "doc_match": "",
+      "table_match": "仓储分拣线运营工时与成本支出表",
+      "row_match": "自动化分拣组",
+      "col_match": "单元总成本",
+      "extract_regex": null,
+      "agg": "first"
+    },
+    "cost_review": {
+      "doc_match": "",
+      "table_match": "仓储分拣线运营工时与成本支出表",
+      "row_match": "人工复核组",
+      "col_match": "单元总成本",
+      "extract_regex": null,
+      "agg": "first"
+    },
+    "cost_total": {
+      "doc_match": "",
+      "table_match": "仓储分拣线运营工时与成本支出表",
+      "row_match": "^合计$",
+      "col_match": "单元总成本",
+      "extract_regex": null,
+      "agg": "first"
+    }
+  },
+  "assertions": [
+    {
+      "id": "RULE_TOTAL_COST_SUM",
+      "description": "自动化分拣组与人工复核组单元总成本之和应等于合计总成本",
+      "lhs": "cost_sort + cost_review",
+      "op": "==",
+      "rhs": "cost_total",
+      "tol": 0.01,
+      "severity": "FAIL"
+    }
+  ]
+}

@@ -104,6 +104,8 @@ flowchart LR
 ## 自动化脚本工具箱
 
 `scripts/` 下全部 5 个脚本**严格仅依赖 Python 3.8+ 标准库**（无需 `pip install` 任何第三方包，原生 OpenXML 解析 `.docx` 与 `.xlsx`）：
+- **全平台编码自动兼容**：针对中文 Windows 导出的 CSV/TSV 数据台账文件，工具内置先 UTF-8、优雅回退 `GB18030` / `GBK` 的双层容错解码机制，彻底解决乱码与系统编码阻断。
+- **开箱即用微型样例**：在 [`examples/minimal-audit-demo/`](examples/minimal-audit-demo/) 提供了包含学术文稿、跨表断言规则及 1 分钟快速体验指引的完整演示。
 
 ```bash
 # 1. 文档泄漏与合稿/分章对齐扫描
@@ -134,6 +136,8 @@ academic-paper-challenger/
 ├── README.md                                 # 中英双语说明、方法论融合矩阵与 CLI 快速上手
 ├── LICENSE                                   # MIT License
 ├── .gitignore                                # 忽略缓存/临时锁文件，保留 tests/fixtures/
+├── examples/
+│   └── minimal-audit-demo/                   # 1 分钟开箱即用微型审核用例与跨表断言示例
 ├── workflows/
 │   ├── stage-1-rapid-blitz.md                # Stage 1 (Pass 1)：收稿定基线 + 半小时五维找茬
 │   ├── stage-2-data-forensics.md             # Stage 2 (Pass 2)：一手来源全量核验 + 全部数据校验与数据挑战

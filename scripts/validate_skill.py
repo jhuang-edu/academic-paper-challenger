@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-validator for thesis-audit Skill package (Python 3.8+ stdlib only)."""
+"""Self-validator for academic-paper-challenger Skill package (Python 3.8+ stdlib only)."""
 from __future__ import annotations
 
 import argparse
@@ -356,7 +356,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
 
-    parser = argparse.ArgumentParser(description="校验 thesis-audit Skill 目录结构、YAML、纯标准库与测试")
+    parser = argparse.ArgumentParser(description="校验 academic-paper-challenger Skill 目录结构、YAML、纯标准库与测试")
     parser.add_argument("--run-tests", action="store_true", help="同时运行 tests/ 全部单元测试")
     parser.add_argument("--format", choices=("text", "json"), default="text", help="输出格式")
     args = parser.parse_args(argv)

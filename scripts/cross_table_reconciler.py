@@ -41,7 +41,7 @@ LIST_HEADING_RE = re.compile(
     re.IGNORECASE,
 )
 NUM_CELL_RE = re.compile(
-    r"^\s*([+-]?\d+(?:\.\d+)?)\s*(%|％|小时|人时|分钟|分|份|个|例|篇|天|元|万元|h|min|kg|mg|次)?\s*$"
+    r"^\s*(?:[¥￥$€£]\s*)?([+-]?\d+(?:\.\d+)?)\s*(%|％|小时|人时|分钟|分|份|个|例|篇|天|元|万元|h|min|kg|mg|次)?\s*$"
 )
 
 

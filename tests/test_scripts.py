@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""End-to-end CLI tests for thesis-audit scripts (Python 3.8+ stdlib only)."""
+"""End-to-end CLI tests for academic-paper-challenger scripts (Python 3.8+ stdlib only)."""
 from __future__ import annotations
 
 import json
@@ -233,7 +233,7 @@ def build_synthetic_xlsx(dest_path: Path) -> None:
         zf.writestr("xl/worksheets/sheet2.xml", sheet2)
 
 
-class TestThesisAuditScripts(unittest.TestCase):
+class TestAcademicPaperChallengerScripts(unittest.TestCase):
     def test_doc_leak_scanner_md_and_negation(self) -> None:
         # Clean file passes
         res_clean = _run_cli(
@@ -387,6 +387,16 @@ class TestThesisAuditScripts(unittest.TestCase):
         ):
             self.assertIn(expected, bad_rules)
         self.assertNotIn("RULE_SUBTOTAL_MATCH", bad_rules)
+
+        # Minimal demo with currency prefixes (¥, $) and rule reconciliation
+        demo_md = Path(__file__).resolve().parent.parent / "examples" / "minimal-audit-demo" / "sample_paper.md"
+        demo_rules = Path(__file__).resolve().parent.parent / "examples" / "minimal-audit-demo" / "audit_rules.json"
+        res_demo = _run_cli(
+            "cross_table_reconciler.py",
+            ["--docs", str(demo_md), "--rules", str(demo_rules), "--format", "json"],
+        )
+        self.assertEqual(res_demo.returncode, 0, res_demo.stderr)
+        self.assertEqual(json.loads(res_demo.stdout)["status"], "PASS")
 
         # Synthetic DOCX with vMerge and gridSpan
         with tempfile.TemporaryDirectory() as tmp:
