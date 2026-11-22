@@ -1,6 +1,6 @@
 <div align="center">
 
-# Thesis Audit Challenger (`thesis-audit-challenger`)
+# Academic Paper Challenger (`academic-paper-challenger`)
 
 **通用学术与学位论文三阶极限审计、数据法医挑战与真实性质询 Skill**  
 *A universal three-stage academic thesis & paper red-team audit skill: integrating two-layer primary-source verification with zero-dependency statistical data forensics and AI/authenticity interrogation.*
@@ -19,7 +19,7 @@
 
 ## 核心方法论融合：两层一手来源核查 × 三阶数据与真实性挑战
 
-`thesis-audit-challenger` 深度融合了考官级**“两层一手来源核查法（Two-Layer Primary-Source Audit）”**与**“零依赖自动化数据法医挑战（Automated Statistical Data Forensics & Authenticity Recovery）”**，适用于**法学、计算机/AI、经管/MBA、工科、理科、医学**等任意学科的学位论文及期刊/会议论文：
+`academic-paper-challenger` 深度融合了考官级**“两层一手来源核查法（Two-Layer Primary-Source Audit）”**与**“零依赖自动化数据法医挑战（Automated Statistical Data Forensics & Authenticity Recovery）”**，适用于**法学、计算机/AI、经管/MBA、工科、理科、医学**等任意学科的学位论文及期刊/会议论文：
 
 | 核心优势模块 | 方法论精髓与执行铁律 |
 |---|---|
@@ -43,29 +43,29 @@
 
 ## 安装指南（Installation）
 
-> **重要提示**：`Agent Skills` 加载器要求 **本地文件夹名称 = `SKILL.md` 中的 `name` = `thesis-audit-challenger`**。
+> **重要提示**：`Agent Skills` 加载器要求 **本地文件夹名称 = `SKILL.md` 中的 `name` = `academic-paper-challenger`**。
 
 ### 方式一：通过 `npx skills` 一键安装（推荐）
 
 ```bash
 # 安装到当前论文工作区
-npx skills add jhuang-edu/thesis-audit-challenger
+npx skills add jhuang-edu/academic-paper-challenger
 
 # 或全局安装
-npx skills add jhuang-edu/thesis-audit-challenger --global
+npx skills add jhuang-edu/academic-paper-challenger --global
 ```
 
 ### 方式二：手动 `git clone` 安装
 
 ```bash
 # 项目级或全局安装（macOS / Linux）
-git clone https://github.com/jhuang-edu/thesis-audit-challenger.git ~/.claude/skills/thesis-audit-challenger
+git clone https://github.com/jhuang-edu/academic-paper-challenger.git ~/.claude/skills/academic-paper-challenger
 ```
 
 Windows PowerShell 全局安装：
 
 ```powershell
-git clone https://github.com/jhuang-edu/thesis-audit-challenger.git "$env:USERPROFILE\.gemini\config\skills\thesis-audit-challenger"
+git clone https://github.com/jhuang-edu/academic-paper-challenger.git "$env:USERPROFILE\.gemini\config\skills\academic-paper-challenger"
 ```
 
 ---
@@ -116,7 +116,7 @@ python -m unittest discover -s tests -v
 ## 仓库目录结构
 
 ```text
-thesis-audit-challenger/
+academic-paper-challenger/
 ├── SKILL.md                                  # <=200行核心路由入口、收稿定基线与三大铁律
 ├── skill.yaml                                # 跨平台 Skill 元数据配置
 ├── README.md                                 # 中英双语说明、方法论融合矩阵与 CLI 快速上手

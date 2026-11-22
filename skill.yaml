@@ -1,4 +1,4 @@
-name: "thesis-audit-challenger"
+name: "academic-paper-challenger"
 title: "Thesis Audit & Data/Authenticity Challenger"
 description: "Audit an academic thesis or paper against its requirements and rubric (finding 50-100 numbered issues across D1-D5), verify every claim and number against primary sources, challenge dataset authenticity with zero-dependency statistical forensics, and interrogate AI-writing/fabrication tells with a graded verdict and correction ledger. Works across Markdown, Word (.docx), LaTeX, PDF, and CSV/TSV/XLSX."
 category: "Academic Research & Quality Assurance"

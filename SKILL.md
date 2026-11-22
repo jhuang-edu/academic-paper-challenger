@@ -1,5 +1,5 @@
 ---
-name: thesis-audit-challenger
+name: academic-paper-challenger
 description: >
   Universal three-stage academic thesis & paper audit and data/authenticity challenger skill
   (integrating two-layer primary-source verification with automated data forensics across Markdown, Word .docx, LaTeX, PDF, and CSV/TSV/XLSX).
@@ -13,7 +13,7 @@ metadata:
   author: "jhuang-edu"
 ---
 
-# Thesis Audit Challenger：通用学术论文核查、数据挑战与真实性质询
+# Academic Paper Challenger：通用学术论文核查、数据挑战与真实性质询
 
 本 Skill 融合了**“两层一手来源考官核查法（First Pass + Primary-Source Second Pass）”**与**“自动化跨表/统计数据法医挑战 + AI 代写与编造真实性破局”**，适用于**任意学科与载体**（`.md` / `.txt` / `.docx` / `.tex` / `.pdf` 与 `.csv` / `.tsv` / `.xlsx`）的学位论文或期刊论文送审前极限压力测试。
 
